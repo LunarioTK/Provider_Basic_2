@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_alone/models/cart_model.dart';
 import 'package:provider_alone/models/catalog_model.dart';
+import 'package:provider_alone/screens/cart.dart';
 import 'package:provider_alone/screens/home.dart';
 
 void main() {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => const Home(),
-          '/cart': (context) => const Card()
+          '/cart': (context) => const MyCart()
         },
       ),
     );

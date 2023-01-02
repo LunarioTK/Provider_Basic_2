@@ -6,6 +6,8 @@ class CartModel extends ChangeNotifier {
 
   final List<String> _cart = [];
 
+  List<String> get Items => _cart;
+
   void add(String item) {
     _cart.add(item);
     notifyListeners();

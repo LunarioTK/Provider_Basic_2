@@ -8,42 +8,51 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var catalog = context.watch<CatalogModel>().catalogList;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Provider basics 2'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/cart');
+            },
+            icon: const Icon(Icons.wallet_giftcard),
+          )
+        ],
       ),
-      body: const _MyCatalog(),
+      body: ListView.builder(
+          itemCount: catalog.length,
+          itemBuilder: (context, index) {
+            return _MyCatalog(item: catalog[index]);
+          }),
     );
   }
 }
 
 class _MyCatalog extends StatelessWidget {
-  const _MyCatalog();
+  final String item;
+  const _MyCatalog({required this.item});
 
   @override
   Widget build(BuildContext context) {
-    var catalog = context.watch<CatalogModel>().catalogList;
     var cart = context.watch<CartModel>();
-    var isInCart = context.select<CartModel, bool>(
-        (cart) => cart.catalog.catalogList.contains(cart));
+    var isInCart =
+        context.select<CartModel, bool>((cart) => cart.Items.contains(item));
 
-    return ListView.builder(
-      itemCount: catalog.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(catalog[index]),
-          trailing: IconButton(
-            icon: isInCart ? const Icon(Icons.check) : const Icon(Icons.add),
-            onPressed: (() {
-              if (!isInCart) {
-                cart.add(catalog[index]);
-              } else {
-                null;
-              }
-            }),
-          ),
-        );
-      },
+    return ListTile(
+      title: Text(item),
+      trailing: IconButton(
+        icon: isInCart ? const Icon(Icons.check) : const Icon(Icons.add),
+        onPressed: (() {
+          if (!isInCart) {
+            cart.add(item);
+          } else {
+            null;
+          }
+        }),
+      ),
     );
   }
 }
