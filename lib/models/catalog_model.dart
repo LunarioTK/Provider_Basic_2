@@ -17,5 +17,5 @@ class CatalogModel {
     'Currying',
   ];
 
-  List<String> get catalog => _catalog.toList();
+  List<String> get catalogList => _catalog.toList();
 }
