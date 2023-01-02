@@ -19,9 +19,26 @@ class MyCart extends StatelessWidget {
             itemBuilder: ((context, index) {
               return ListTile(
                 title: Text(cart[index]),
+                trailing: _Remove(item: cart[index]),
               );
             })),
       ),
+    );
+  }
+}
+
+class _Remove extends StatelessWidget {
+  final String item;
+  const _Remove({required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    var remove = context.watch<CartModel>().remove;
+    return IconButton(
+      icon: const Icon(Icons.remove),
+      onPressed: () {
+        remove(item);
+      },
     );
   }
 }
